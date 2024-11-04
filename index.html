@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width" />
-<link href="https://ref.gs1.org/styles/base.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width">
+<title>GS1 Module Count tool</title>
+<link href="https://ref.gs1.org/styles/base.css" rel="stylesheet">
 <script src="https://ref.gs1.org/inc/gs1-fixup.js"></script>
 <script src="vue.min.js"></script>
 <script src="GS1DigitalLinkToolkit.js"></script>
 <script type="text/javascript" src="dist/bwip-js-min.js"></script>
 <script src="pdfkit.standalone.min.js"></script>
 <script src="blob-stream.js"></script>
-<script language="javascript">
+<script>
 
 var s4tPrimaryIdentifiers=[
 {"code":'01',"label":'GTIN',"grouping":'PrimaryIdentifiers',"datatype":"xsd:string","definition":'Global Trade Item Number (GTIN)',"example":"09506000134376","percentEncoded":false,"pattern":"[0-9]{14}"}
@@ -119,7 +120,7 @@ var zeroToFive=["0","1","2","3","4","5"];
 
 </script>
 
-<style type="text/css">
+<style>
 body { font-family: Verdana; }
 h1 {text-align: center;}
 h2 {text-align: center;}
@@ -183,7 +184,8 @@ input.isOK {background-color: #FFFFFF;}
   <h1 id="title">GS1 Module Count tool</h1>
 </div>
 </header>
-<p><strong>Note:</strong> This tool is provided as a hint for the likely minimum and maximum size of 2D barcodes with different GS1 syntaxes. It is not intended as a barcode generation tool and the output should not be used in place of production-grade print software.</p>
+<main>
+	<p><strong>Note:</strong> This tool is provided to help users to estimate the likely minimum and maximum size of 2D barcodes with different GS1 syntaxes, scanning environments and error correction levels. It is not intended as a barcode generation tool and the output should not be used in place of production-grade print software.</p>
 <div id="app1">
 
 <div id="inputform">
@@ -206,7 +208,7 @@ input.isOK {background-color: #FFFFFF;}
 	<option value="H">High</option>
 	</select>	
 	</td></tr>
-	<tr v-if="(whichCode==0) || (whichCode==2)"><td>Enter any URI (optional):</td><td colspan="3"><input type="text" class="maxWidth" v-model="specifiedURI"/><input type="button" value="Clear" @click="clearSpecifiedURI"></td></tr>
+	<tr v-if="(whichCode==0) || (whichCode==2)"><td>Enter any URI (optional):</td><td colspan="3"><input type="text" class="maxWidth" v-model="specifiedURI"><input type="button" value="Clear" @click="clearSpecifiedURI"></td></tr>
 	
 	<tr v-if="specifiedURI == ''"><td>GTIN</td><td colspan="2"><input class="maxWidth" type="text" v-model="primaryValue"></td><td><input type="button" value="demo" @click="demoData2(primaryAIobj.example)"></td></tr>
 	<tr v-if="(specifiedURI == '') && (!gtinIs14digits)"><td></td><td colspan="3">^^ Please enter a GTIN as exactly 14 digits</td></tr>
@@ -290,9 +292,10 @@ input.isOK {background-color: #FFFFFF;}
 	<option value="0">General retail POS AND general distribution</option>
 	<option value="1">ONLY General retail POS, NOT in general distribution</option>
 	</select>
-	<p>(Using {{sstRef[whichSST]}}<br/>of GS1 General Specifications &sect;{{sstSection[whichSST]}})</p>
+	<p>(Using {{sstRef[whichSST]}} of GS1 General Specifications &sect;{{sstSection[whichSST]}})</p>
 	</tr>
-	<tr><td colspan="4" style="text-align:center">2D barcode generated using<br><a href="https://github.com/metafloor/bwip-js/" class="external">https://github.com/metafloor/bwip-js/</a><br><br>For questions/feedback about this tool,<br>please contact <a href="mailto:mark.harrison@gs1.org">mark.harrison@gs1.org</a></td></tr>
+	<tr><td colspan="4" style="background-color:var(--gs1-color-ui-2); padding-left:.5em"><p>Barcode generated using <a href="https://github.com/metafloor/bwip-js/" class="external">Barcode Writer in Pure JavaScript</a></p>
+        <p>For questions/feedback about this tool, please contact <a href="mailto:mark.harrison@gs1.org">mark.harrison@gs1.org</a></p></td></tr>
 
 	</table>
 
@@ -313,7 +316,7 @@ input.isOK {background-color: #FFFFFF;}
 	</table>
 	<div v-if="(whichCode==0)">
 
-    <hr/>
+    <hr>
 	    <p>
 	        <select v-model="whichSST2" class="selectSST">
             	<option value="0">General retail POS AND general distribution</option>
@@ -337,7 +340,7 @@ input.isOK {background-color: #FFFFFF;}
 	</div>
 	<div v-if="(whichCode==2)">
 
-    <hr/>
+    <hr>
 	    <p>
 	        <select v-model="whichSST2" class="selectSST">
             	<option value="0">General retail POS AND general distribution</option>
@@ -392,7 +395,8 @@ input.isOK {background-color: #FFFFFF;}
 
 
 </div>
-
+</div>
+</main>
 
 
 <script language="javascript">
