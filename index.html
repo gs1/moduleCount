@@ -329,7 +329,7 @@ input.isOK {background-color: #FFFFFF;}
         		<option value="1">including quiet zone</option>
         	</select>
         	</p>
-	    <table>
+	    <table style="background-color:white">
 	        <thead><tr class="underline"><th>Error correction</th><th v-if="quietZone2==0">Module Count excluding quiet zone</th><th  v-if="quietZone2==1">Module Count including quiet zone</th><th>Minimum size (mm)</th><th>Target size (mm)</th><th>Maximum size (mm)</th></tr></thead>
 	        <tbody>
 	            <tr v-for="k of Object.keys(countModulesEncodedData)" v-bind:class="{ highlight: (k == errorCorrection) }"><td>{{k}}</td><td  v-if="quietZone2==0">{{countModulesEncodedData[k]}} x {{countModulesEncodedData[k]}}</td><td  v-if="quietZone2==1">{{8+countModulesEncodedData[k]}} x {{8+countModulesEncodedData[k]}}</td><td>{{symbolSizeMinimum2(8*quietZone2+countModulesEncodedData[k])}}</td><td>{{symbolSizeTarget2(8*quietZone2+countModulesEncodedData[k])}}</td><td>{{symbolSizeMaximum2(8*quietZone2+countModulesEncodedData[k])}}</td></tr>
@@ -398,17 +398,16 @@ input.isOK {background-color: #FFFFFF;}
 
 </div>
 </div>
-	<div id="disclaimers" style="clear:both; border-top:thin solid black; margin-top:.2em;padding-top:2em; font-size:small">
-<p><strong>Notice and Disclaimers</strong>: GS1 provides this tool “AS IS” WITH NO WARRANTIES whatsoever, express or implied, including any warranty of merchantability, noninfringement, fitness for particular purpose, accuracy or completeness, or any warranty otherwise arising out of this tool. GS1 disclaims all liability for any damages arising from any use or misuse of this tool, whether special, indirect, consequential, or compensatory damages, and including liability for infringement of any intellectual property rights, relating to use of or reliance upon this tool or any related information.</p>
-<p>This tool uses the following software resources subject to their corresponding licences, which are available at the links below:</p>
-<ul>
-<li>"moduleCount," available at <a href="https://github.com/gs1/moduleCount/">https://github.com/gs1/moduleCount/</a></li>
-<li>"Barcode Writer in Pure JavaScript," available here: <a href="https://github.com/metafloor/bwip-js/">https://github.com/metafloor/bwip-js/</a></li>
-<li>"PDFkit," available at <a href="https://github.com/foliojs/pdfkit">https://github.com/foliojs/pdfkit</a></li>
-</ul>
-	</div>
-		
 </main>
+<footer id="disclaimers" style="clear:both; border-top:thin solid black; margin-top:.2em;padding-top:2em; font-size:small">
+    <p><strong>Notice and Disclaimers</strong>: GS1 provides this tool “AS IS” WITH NO WARRANTIES whatsoever, express or implied, including any warranty of merchantability, noninfringement, fitness for particular purpose, accuracy or completeness, or any warranty otherwise arising out of this tool. GS1 disclaims all liability for any damages arising from any use or misuse of this tool, whether special, indirect, consequential, or compensatory damages, and including liability for infringement of any intellectual property rights, relating to use of or reliance upon this tool or any related information.</p>
+    <p>This tool uses the following software resources subject to their corresponding licences, which are available at the links below:</p>
+    <ul>
+        <li>"moduleCount," available at <a href="https://github.com/gs1/moduleCount/">https://github.com/gs1/moduleCount/</a></li>
+        <li>"Barcode Writer in Pure JavaScript," available here: <a href="https://github.com/metafloor/bwip-js/">https://github.com/metafloor/bwip-js/</a></li>
+        <li>"PDFkit," available at <a href="https://github.com/foliojs/pdfkit">https://github.com/foliojs/pdfkit</a></li>
+    </ul>
+</footer>
 
 
 <script language="javascript">
