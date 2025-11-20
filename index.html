@@ -429,7 +429,7 @@ input.isOK {background-color: #FFFFFF;}
 	var uriStemCase="unchanged";
 
 
-function updateCanvas(code,stringToEncode,errorCorrection) {
+function updateCanvas(code,stringToEncode,errorCorrection,quietZoneMargin) {
 	try {
 	
 		let o={
@@ -440,6 +440,18 @@ function updateCanvas(code,stringToEncode,errorCorrection) {
 				includetext: false,            // Show human-readable text
 				textxalign:  'center',        // Always good to set this
 			};
+
+		let o2={
+				bcid:        code,       // Barcode type
+				text:        stringToEncode,    // Text to encode
+				scaleX:       2,               // 3x scaling factor
+				scaleY:       2,               // 3x scaling factor
+				paddingheight: 2*quietZoneMargin,
+				paddingwidth: 2*quietZoneMargin,
+				includetext: false,            // Show human-readable text
+				textxalign:  'center',        // Always good to set this
+			};
+
 		if (errorCorrection !== null) {
 			o.eclevel=errorCorrection;
 		}
@@ -450,8 +462,9 @@ function updateCanvas(code,stringToEncode,errorCorrection) {
 		let canvas2 = bwipjs.toCanvas(elem2, o);
 		let dataURL = canvas2.toDataURL('image/png');
 		let svg = bwipjs.toSVG(o);
+		let svg2 = bwipjs.toSVG(o2);
 		
-		return {"modules":canvas2.width/4,"dataURL":dataURL,"svg":svg };		
+		return {"modules":canvas2.width/4,"dataURL":dataURL,"svg":svg, "svg2": svg2};		
 	} catch (e) {
 		// `e` may be a string or Error object
 	}
@@ -761,13 +774,13 @@ function percentEncode(el) {
 			},
 			
 			"res1" : function() {			
-					return updateCanvas("qrcode", this.encodedData, this.errorCorrection);
+					return updateCanvas("qrcode", this.encodedData, this.errorCorrection, 4*this.quietZone2);
 			},
 			"res2" : function() {
-				return updateCanvas("gs1datamatrix",this.gs1elementString,null);
+				return updateCanvas("gs1datamatrix",this.gs1elementString,null,this.quietZone2);
 			},
 			"res3" : function() {
-					return updateCanvas("datamatrix", this.encodedData,null);
+					return updateCanvas("datamatrix", this.encodedData,null,this.quietZone2);
 			},
 
 			
@@ -789,9 +802,15 @@ function percentEncode(el) {
 				if (this.whichCode==1) { return this.res2?.svg; }
 				if (this.whichCode==2) { return this.res3?.svg; }
 			},
+
+			imgSVG2: function() {
+				if (this.whichCode==0) { return this.res1?.svg2; }
+				if (this.whichCode==1) { return this.res2?.svg2; }
+				if (this.whichCode==2) { return this.res3?.svg2; }
+			},
 			
 			imgSVGurl: function() {
-				let blob = new Blob([this.svgComment+this.imgSVG], { type: "image/svg+xml" });
+				let blob = new Blob([this.svgComment+this.imgSVG2], { type: "image/svg+xml" });
 				let url = URL.createObjectURL(blob);
 				return url;
 			},
@@ -1079,14 +1098,14 @@ function percentEncode(el) {
 			    let rv={};
 				if (this.whichCode==0) { 
 					for (c of ["L","M","Q","H"]) {
-						rv[c]=updateCanvas("qrcode",val,c)?.modules;
+						rv[c]=updateCanvas("qrcode",val,c,0)?.modules;
 					}				    
 				}
 				if (this.whichCode==1) { 
-	        			rv= updateCanvas("gs1datamatrix",val,null)?.modules;
+	        			rv= updateCanvas("gs1datamatrix",val,null,0)?.modules;
 				}
 				if (this.whichCode==2) { 
-	        			rv= updateCanvas("datamatrix",val,null)?.modules;
+	        			rv= updateCanvas("datamatrix",val,null,0)?.modules;
 				}
 				
 				return rv;
